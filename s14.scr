@@ -1,0 +1,111 @@
+Script started on 2020-03-13 21:18:30-0700
+]0;mlclub@mlclub-VirtualBox: ~/cs1b/hw05[01;32mmlclub@mlclub-VirtualBox[00m:[01;34m~/cs1b/hw05[00m$ gdb s14
+GNU gdb (Ubuntu 8.1-0ubuntu3) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from s14...done.
+(gdb) l
+1	#include "hw05.h"
+2	
+3	int main() {
+4	    int d[5] = {1,2,3,4,5};
+5	    int s;
+6	// i n i t i a l i z e d [ ]
+7	    s = Sum(d);
+8	    std::cout << "s: " << s;
+9	    return 0;
+10	}(gdb) break ""1"
+Breakpoint 1 at 0x8d2: file s14.cpp, line 1.
+(gdb) r
+Starting program: /home/mlclub/cs1b/hw05/s14 
+
+Breakpoint 1, main () at s14.cpp:3
+3	int main() {
+(gdb) s
+4	    int d[5] = {1,2,3,4,5};
+(gdb) s
+7	    s = Sum(d);
+(gdb) s
+Sum (A=0x7fffffffde50) at s14f.cpp:9
+9	    int sum = 0;
+(gdb) l
+4	
+5	#include "hw05.h"
+6	
+7	int Sum(int A[5]) {
+8	    int i;
+9	    int sum = 0;
+10	    for(i=0;i<5;++i) {
+11	        sum += A[i]; // array itself is in the stack and the elements are in the heap
+12	    }
+13	    return sum;
+(gdb) break ""1"2"
+Breakpoint 2 at 0x5555555549ea: file s14f.cpp, line 12.
+(gdb) s
+10	    for(i=0;i<5;++i) {
+(gdb) s
+11	        sum += A[i]; // array itself is in the stack and the elements are in the heap
+(gdb) p sum
+$1 = 0
+(gdb) p &sum
+$2 = (int *) 0x7fffffffde2c
+(gdb) s
+10	    for(i=0;i<5;++i) {
+(gdb) s
+11	        sum += A[i]; // array itself is in the stack and the elements are in the heap
+(gdb) p sum
+$3 = 1
+(gdb) p &sum
+$4 = (int *) 0x7fffffffde2c
+(gdb) s
+10	    for(i=0;i<5;++i) {
+(gdb) s
+11	        sum += A[i]; // array itself is in the stack and the elements are in the heap
+(gdb) s
+10	    for(i=0;i<5;++i) {
+(gdb) s
+11	        sum += A[i]; // array itself is in the stack and the elements are in the heap
+(gdb) p sum
+$5 = 6
+(gdb) p &sum
+$6 = (int *) 0x7fffffffde2c
+(gdb) c
+Continuing.
+
+Breakpoint 2, Sum (A=0x7fffffffde50) at s14f.cpp:13
+13	    return sum;
+(gdb) s
+14	}(gdb) s
+main () at s14.cpp:8
+8	    std::cout << "s: " << s;
+(gdb) p s
+$7 = 15
+(gdb) p &s
+$8 = (int *) 0x7fffffffde4c
+(gdb) s
+9	    return 0;
+(gdb) s
+10	}(gdb) s
+__libc_start_main (main=0x5555555548ca <main()>, argc=1, argv=0x7fffffffdf58, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, 
+    stack_end=0x7fffffffdf48) at ../csu/libc-start.c:344
+344	../csu/libc-start.c: No such file or directory.
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 7223] will be killed.
+
+Quit anyway? (y or n) y
+]0;mlclub@mlclub-VirtualBox: ~/cs1b/hw05[01;32mmlclub@mlclub-VirtualBox[00m:[01;34m~/cs1b/hw05[00m$ exit
+
+Script done on 2020-03-13 21:21:48-0700

@@ -1,0 +1,120 @@
+Script started on 2020-03-14 09:31:27-0700
+]0;mlclub@mlclub-VirtualBox: ~/cs1b/hw05[01;32mmlclub@mlclub-VirtualBox[00m:[01;34m~/cs1b/hw05[00m$ gdb s22
+GNU gdb (Ubuntu 8.1-0ubuntu3) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from s22...done.
+(gdb) l
+warning: Source file is more recent than executable.
+1	//
+2	// Created by Carlos Aguilera on 3/5/20.
+3	//
+4	
+5	#include "hw05.h"
+6	
+7	int main() {
+8	    int *d, s;
+9	    d = new int[5*8];
+10	    if (!d) return -1;
+(gdb) l
+11	    s = Sum(d,5,8);
+12	    delete [] d; // ye s !
+13	    return 0;
+14	}
+(gdb) break ""1"
+Breakpoint 1 at 0x7f2: file s22.cpp, line 1.
+(gdb) r
+Starting program: /home/mlclub/cs1b/hw05/s22 
+
+Breakpoint 1, main () at s22.cpp:9
+9	    d = new int[5*8];
+(gdb) s
+10	    if (!d) return -1;
+(gdb) s
+11	    s = Sum(d,5,8);
+(gdb) s
+Sum (p=0x555555767e70, r=5, c=8) at s22f.cpp:8
+8	    int j, k, sum = 0;
+(gdb) l
+3	//
+4	
+5	#include "hw05.h"
+6	
+7	int Sum(int *p,int r,int c) {
+8	    int j, k, sum = 0;
+9	    for(j=0;j<r;++j) {
+10	        for(k=0;k<c;++k) {
+11	            sum += *(p+j*c+k);
+12	        }
+(gdb) l
+13	    }
+14	    return sum;
+15	}(gdb) break ""1"3"
+Breakpoint 2 at 0x555555554904: file s22f.cpp, line 13.
+(gdb) s
+9	    for(j=0;j<r;++j) {
+(gdb) s
+10	        for(k=0;k<c;++k) {
+(gdb) s
+11	            sum += *(p+j*c+k);
+(gdb) p  sum
+$1 = 0
+(gdb) s
+10	        for(k=0;k<c;++k) {
+(gdb) s
+11	            sum += *(p+j*c+k);
+(gdb) p sum
+$2 = 0
+(gdb) p &sum
+$3 = (int *) 0x7fffffffde4c
+(gdb) s
+10	        for(k=0;k<c;++k) {
+(gdb) s
+11	            sum += *(p+j*c+k);
+(gdb) p sum
+$4 = 0
+(gdb) p &sum
+$5 = (int *) 0x7fffffffde4c
+(gdb) s
+10	        for(k=0;k<c;++k) {
+(gdb) s
+11	            sum += *(p+j*c+k);
+(gdb) p sum
+$6 = 0
+(gdb) p &sum
+$7 = (int *) 0x7fffffffde4c
+(gdb) c
+Continuing.
+
+Breakpoint 2, Sum (p=0x555555767e70, r=5, c=8) at s22f.cpp:14
+14	    return sum;
+(gdb) s
+15	}(gdb) s
+main () at s22.cpp:12
+12	    delete [] d; // ye s !
+(gdb) p s
+$8 = 0
+(gdb) p &su[K
+$9 = (int *) 0x7fffffffde64
+(gdb) c
+Continuing.
+[Inferior 1 (process 7633) exited normally]
+(gdb) s
+The program is not being run.
+(gdb) qw
+Undefined command: "qw".  Try "help".
+(gdb) q
+]0;mlclub@mlclub-VirtualBox: ~/cs1b/hw05[01;32mmlclub@mlclub-VirtualBox[00m:[01;34m~/cs1b/hw05[00m$ exit
+
+Script done on 2020-03-14 09:33:14-0700

@@ -1,0 +1,106 @@
+Script started on 2020-03-13 21:30:16-0700
+]0;mlclub@mlclub-VirtualBox: ~/cs1b/hw05[01;32mmlclub@mlclub-VirtualBox[00m:[01;34m~/cs1b/hw05[00m$ gdb s16
+GNU gdb (Ubuntu 8.1-0ubuntu3) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from s16...done.
+(gdb) l
+1	//
+2	// Created by Carlos Aguilera on 3/5/20.
+3	//
+4	
+5	#include "hw05.h"
+6	
+7	int main() {
+8	    int *d, s;
+9	    d = new int[5];
+10	// i n i t i a l i z e ∗d
+(gdb) break ""1"
+Breakpoint 1 at 0x7f2: file s16.cpp, line 1.
+(gdb) r
+Starting program: /home/mlclub/cs1b/hw05/s16 
+
+Breakpoint 1, main () at s16.cpp:9
+9	    d = new int[5];
+(gdb) p d
+$1 = (int *) 0x0
+(gdb) p &d
+$2 = (int **) 0x7fffffffde68
+(gdb) s
+11	    s = Sum(d,5);
+(gdb) s
+Sum (p=0x555555767e70, k=5) at s16f.cpp:9
+9	    int sum = 0;
+(gdb) l
+4	
+5	#include "hw05.h"
+6	
+7	int Sum(int *p, int k) {
+8	    int i;
+9	    int sum = 0;
+10	    for(i=0;i<k;++i) {
+11	        sum += *(p+i);
+12	    }
+13	    return sum;
+(gdb) break ""1"2"
+Breakpoint 2 at 0x5555555548cc: file s16f.cpp, line 12.
+(gdb) s
+10	    for(i=0;i<k;++i) {
+(gdb) s
+11	        sum += *(p+i);
+(gdb) p sum
+$3 = 0
+(gdb) p &sum
+$4 = (int *) 0x7fffffffde4c
+(gdb) s
+10	    for(i=0;i<k;++i) {
+(gdb) s
+11	        sum += *(p+i);
+(gdb) s
+10	    for(i=0;i<k;++i) {
+(gdb) s
+11	        sum += *(p+i);
+(gdb) p sum
+$5 = 0
+(gdb) p &sum
+$6 = (int *) 0x7fffffffde4c
+(gdb) c
+Continuing.
+
+Breakpoint 2, Sum (p=0x555555767e70, k=5) at s16f.cpp:13
+13	    return sum;
+(gdb) s
+14	}(gdb) s
+main () at s16.cpp:12
+12	    delete [] d;
+(gdb) p s
+$7 = 0
+(gdb) p &s
+$8 = (int *) 0x7fffffffde64
+(gdb) s
+13	    return 0;
+(gdb) s
+14	}(gdb) s
+__libc_start_main (main=0x5555555547ea <main()>, argc=1, argv=0x7fffffffdf58, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, 
+    stack_end=0x7fffffffdf48) at ../csu/libc-start.c:344
+344	../csu/libc-start.c: No such file or directory.
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 7288] will be killed.
+
+Quit anyway? (y or n) y
+]0;mlclub@mlclub-VirtualBox: ~/cs1b/hw05[01;32mmlclub@mlclub-VirtualBox[00m:[01;34m~/cs1b/hw05[00m$ exit
+
+Script done on 2020-03-13 21:33:20-0700

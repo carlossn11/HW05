@@ -1,0 +1,177 @@
+Script started on 2020-03-13 22:06:14-0700
+]0;mlclub@mlclub-VirtualBox: ~/cs1b/hw05[01;32mmlclub@mlclub-VirtualBox[00m:[01;34m~/cs1b/hw05[00m$ gdb s1878
+GNU gdb (Ubuntu 8.1-0ubuntu3) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from s18...done.
+(gdb) l
+1	//
+2	// Created by Carlos Aguilera on 3/5/20.
+3	//
+4	
+5	#include "hw05.h"
+6	
+7	int main() {
+8	    int *d[5], s, i, j, k;
+9	    for (i = 0; i < 5; ++i)
+10	        d[i] = new int[8];
+(gdb) l
+11	    for (j = 0; j < 5; ++j)
+12	        for (k = 0; k < 8; ++k)
+13	            *(d[j] + k) = j + k; // o r
+14	    s = Sum(d, 5); //d [ j ] [ k]= j+k
+15	    for (i = 0; i < 5; ++i)
+16	        delete d[i];
+17	}(gdb) break ""1"
+Breakpoint 1 at 0x882: file s18.cpp, line 1.
+(gdb) break ""1"1"
+Breakpoint 2 at 0x8bb: file s18.cpp, line 11.
+(gdb) break "11"[1P"4"
+Breakpoint 3 at 0x902: file s18.cpp, line 14.
+(gdb) break "14"[1P"6"
+Breakpoint 4 at 0x923: file s18.cpp, line 16.
+(gdb) r
+Starting program: /home/mlclub/cs1b/hw05/s18 
+
+Breakpoint 1, main () at s18.cpp:7
+7	int main() {
+(gdb) s
+9	    for (i = 0; i < 5; ++i)
+(gdb) s
+10	        d[i] = new int[8];
+(gdb) p d
+$1 = {0x7ffff7de59a0 <_dl_fini>, 0x0, 0x555555554a80 <__libc_csu_init>, 0x555555554770 <_start>, 0x7fffffffdf50}
+(gdb) p &d
+$2 = (int *(*)[5]) 0x7fffffffde40
+(gdb) s
+9	    for (i = 0; i < 5; ++i)
+(gdb) s
+10	        d[i] = new int[8];
+(gdb) c
+Continuing.
+
+Breakpoint 2, main () at s18.cpp:11
+11	    for (j = 0; j < 5; ++j)
+(gdb) s
+12	        for (k = 0; k < 8; ++k)
+(gdb) s
+13	            *(d[j] + k) = j + k; // o r
+(gdb) s
+12	        for (k = 0; k < 8; ++k)
+(gdb) c
+Continuing.
+
+Breakpoint 3, main () at s18.cpp:14
+14	    s = Sum(d, 5); //d [ j ] [ k]= j+k
+(gdb) s
+Sum (A=0x7fffffffde40, r=5) at s18f.cpp:8
+8	    int j, k, sum = 0;
+(gdb) l
+3	//
+4	
+5	#include "hw05.h"
+6	
+7	int Sum(int *A[], int r) {
+8	    int j, k, sum = 0;
+9	    for (j = 0; j < r; ++j) {
+10	        for (k = 0; k < 8; ++k) {
+11	            sum += A[j][k]; // o r
+12	        } // ∗(d [ j ]+k )
+(gdb) l
+13	    }
+14	    return sum;
+15	}(gdb) break ""1"3"
+Breakpoint 5 at 0x555555554a1c: file s18f.cpp, line 13.
+(gdb) s
+9	    for (j = 0; j < r; ++j) {
+(gdb) s
+10	        for (k = 0; k < 8; ++k) {
+(gdb) s
+11	            sum += A[j][k]; // o r
+(gdb) p sum
+$3 = 0
+(gdb) p &sum
+$4 = (int *) 0x7fffffffde1c
+(gdb) s
+10	        for (k = 0; k < 8; ++k) {
+(gdb) s
+11	            sum += A[j][k]; // o r
+(gdb) p sum
+$5 = 0
+(gdb) p &sum
+$6 = (int *) 0x7fffffffde1c
+(gdb) s
+10	        for (k = 0; k < 8; ++k) {
+(gdb) s
+11	            sum += A[j][k]; // o r
+(gdb) p sum
+$7 = 1
+(gdb) p &sum
+$8 = (int *) 0x7fffffffde1c
+(gdb) s
+10	        for (k = 0; k < 8; ++k) {
+(gdb) c
+Continuing.
+
+Breakpoint 5, Sum (A=0x7fffffffde40, r=5) at s18f.cpp:14
+14	    return sum;
+(gdb) s
+15	}(gdb) s
+main () at s18.cpp:15
+15	    for (i = 0; i < 5; ++i)
+(gdb) s
+
+Breakpoint 4, main () at s18.cpp:16
+16	        delete d[i];
+(gdb) s
+15	    for (i = 0; i < 5; ++i)
+(gdb) c
+Continuing.
+
+Breakpoint 4, main () at s18.cpp:16
+16	        delete d[i];
+(gdb) s
+15	    for (i = 0; i < 5; ++i)
+(gdb) s
+
+Breakpoint 4, main () at s18.cpp:16
+16	        delete d[i];
+(gdb) s
+15	    for (i = 0; i < 5; ++i)
+(gdb) s
+
+Breakpoint 4, main () at s18.cpp:16
+16	        delete d[i];
+(gdb) s
+15	    for (i = 0; i < 5; ++i)
+(gdb) s
+
+Breakpoint 4, main () at s18.cpp:16
+16	        delete d[i];
+(gdb) s
+15	    for (i = 0; i < 5; ++i)
+(gdb) s
+17	}(gdb) s
+__libc_start_main (main=0x55555555487a <main()>, argc=1, argv=0x7fffffffdf58, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, 
+    stack_end=0x7fffffffdf48) at ../csu/libc-start.c:344
+344	../csu/libc-start.c: No such file or directory.
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 7513] will be killed.
+
+Quit anyway? (y or n) y
+]0;mlclub@mlclub-VirtualBox: ~/cs1b/hw05[01;32mmlclub@mlclub-VirtualBox[00m:[01;34m~/cs1b/hw05[00m$ exit
+^F
+Script done on 2020-03-13 22:10:57-0700
